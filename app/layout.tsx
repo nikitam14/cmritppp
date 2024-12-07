@@ -4,6 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";  // Make sure this is imported and used somewhere
 
 import "./globals.css";
+import { ToastProvider } from "@/providers/toast-provider";
 
 // You may use Google font or local fonts
 const poppins = Poppins({
@@ -27,6 +28,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={poppins.className}>
           {children}
+          <ToastProvider/>
         </body>
       </html>
     </ClerkProvider>

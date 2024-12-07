@@ -16,6 +16,9 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
     title: z.string().min(1, { message: "Job Title cannot be empty" }),
@@ -31,9 +34,18 @@ const JobCreatePage = () => {
     });
 
     const {isSubmitting, isValid }= form.formState
+    const router= useRouter();
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        console.log(values);
+        try{
+            const response= await axios.post("/api/jobs", values);
+            router.push(`/admin/jobs/${response.data.id}`);
+            toast.success("Company Created");
+        }catch(error){
+            console.log((error as Error) ?.message);
+
+            // toast notification
+        }
     };
 
     return (
@@ -42,9 +54,9 @@ const JobCreatePage = () => {
             <div className="w-full max-w-lg space-y-6">
                 {/* Section: Name your Job */}
                 <div>
-                    <h1 className="text-2xl font-medium">Name your job</h1>
+                    <h1 className="text-2xl font-medium">Name the Company</h1>
                     <p className="text-sm text-neutral-500 mt-2 pb-5">
-                        What would you like to name your job? Don&apos;t worry, you can
+                       Don&apos;t worry, you can
                         change this later.
                     </p>
                 </div>
@@ -57,35 +69,40 @@ const JobCreatePage = () => {
                     >
                         {/* Form Field */}
                         <FormField
-                            control={form.control}
-                            name="title"
-                            render={({ field }) => {
-                                return (
-                                    <FormItem>
-                                        {/* Job Title */}
-                                        <FormLabel className="text-base font-medium">
-                                            Job Title
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                disabled={isSubmitting}
-                                                placeholder="e.g. 'Full-Stack Developer'"
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        {/* Role Description */}
-                                        <FormDescription className="text-sm text-neutral-500">
-                                            Role of this job
-                                        </FormDescription>
-                                        <FormMessage/>
-                                    </FormItem>
-                                );
-                            }}
-                        ></FormField>
+                        control={form.control}
+                        name="title"
+                        render={({ field }) => {
+                            return (
+                    <>
+                
+                        {/* Job Title */}
+                        <FormItem className="mt-6"> {/* Added margin top to the entire FormItem */}
+                            <FormLabel className="text-base font-medium">
+                                Company Name
+                            </FormLabel>
+                            <FormControl>
+                                <Input
+                                    disabled={isSubmitting}
+                                    placeholder="e.g. 'Delloite'"
+                                    {...field}
+                                />
+                            </FormControl>
+                        </FormItem>
+
+                        {/* Role Description */}
+                        <FormItem className="mt-2">
+                            <FormDescription className="text-sm text-neutral-500">
+                                Role of this job
+                            </FormDescription>
+                        </FormItem>
+                    </>
+                        );
+                    }}
+                ></FormField>
 
                         {/* Buttons */}
                         <div className="flex items-center gap-x-2">
-                            <Link href={"/"}>
+                            <Link href={"/admin/jobs"}>
                                 <Button type="button" variant={"ghost"}>
                                     Cancel
                                 </Button>
@@ -102,3 +119,6 @@ const JobCreatePage = () => {
 };
 
 export default JobCreatePage;
+
+// ___________________________________________________________
+

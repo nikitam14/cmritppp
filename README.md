@@ -39,3 +39,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 <!-- _________________________________________________ -->
 
 routes -> admin -> create -> page.tsx : Add new jobs by the admin
+
+installing prisma after that->
+npx prisma init
+
+lec-10 -> How to do changes in schema
