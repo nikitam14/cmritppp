@@ -11,25 +11,29 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Job } from "@prisma/client";
+import { cn } from "@/lib/utils";
+import { ComboBox } from "@/components/ui/combo-box";
 
-interface TitleFormProps {
-  initialData: {
-    title: string;
-  };
+interface CategoryFormProps {
+  initialData: Job
   jobId: string;
+  options : {label: string, value: string}[]
 }
 
 const formSchema = z.object({
-  title: z.string().min(1, { message: "Company name is required" }),
+  categoryId: z.string().min(1),
 });
 
-export const TitleForm = ({ initialData = { title: "" }, jobId }: TitleFormProps) => {
+export const CategoryForm = ({ initialData, jobId, options }: CategoryFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData,
+    defaultValues: {
+      categoryId: initialData?.categoryId || ""
+    },
   });
 
   const { isSubmitting, isValid } = form.formState;
@@ -37,7 +41,7 @@ export const TitleForm = ({ initialData = { title: "" }, jobId }: TitleFormProps
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
         const response=await axios.patch(`/api/jobs/${jobId}`, values);
-        toast.success("Company Updated");
+        toast.success("Job Category Updated");
         toggleEditing();
         router.refresh();
     } catch (error) {
@@ -47,26 +51,31 @@ export const TitleForm = ({ initialData = { title: "" }, jobId }: TitleFormProps
 
   const toggleEditing = () => setIsEditing((current) => !current);
 
+  const selectedOption =options.find(option=> option.value === initialData.categoryId)
+
   return (
     <div className="mt-6 border bg-neutral-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Company Name
+        Job Category
         <Button onClick={toggleEditing} variant={"ghost"}>
           {isEditing ? (
             <>Cancel</>
           ) : (
             <>
               <Pencil className="w-4 h-4 mr-2" />
-              Edit 
+              Edit
             </>
           )}
         </Button>
       </div>
 
-      {/* Display the title if not editing */}
+      {/* Display the category id if not editing */}
       {!isEditing && (
-        <p className="text-sm mt-2">{initialData?.title || "No title available"}</p>
-      )}
+        <p className={cn("text-sm mt-2", !initialData?.categoryId && "text-neutral-500 italic")}>{selectedOption?.label || "No Category"}</p>
+      )}           
+
+      {/* display the category id if not editing
+      {!isEditing && <p className="text-sm mt-2">{initialData.categoryId}</p>} */}
 
       {/* On editing mode display the input */}
       {isEditing && (
@@ -74,11 +83,16 @@ export const TitleForm = ({ initialData = { title: "" }, jobId }: TitleFormProps
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
-              name="title"
+              name="categoryId"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input disabled={isSubmitting} placeholder="e.g. 'Deloitte'" {...field} />
+                    <ComboBox 
+                    heading= "Categories"
+                    options={options}
+                    {...field}
+                    />
+
                   </FormControl>
                   <FormMessage />
                 </FormItem>

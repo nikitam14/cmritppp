@@ -8,77 +8,84 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { ComboBox } from "@/components/ui/combo-box";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { cn } from "@/lib/utils";
 
-interface TitleFormProps {
-  initialData: {
-    title: string;
-  };
+interface WorkModeFormProps {
+  initialData: { workMode: string | null };
   jobId: string;
+  options: { label: string; value: string }[];
 }
 
 const formSchema = z.object({
-  title: z.string().min(1, { message: "Company name is required" }),
+  workMode: z.string().min(1, "Please select Work Mode."),
 });
 
-export const TitleForm = ({ initialData = { title: "" }, jobId }: TitleFormProps) => {
+export const WorkModeForm = ({ initialData, jobId, options }: WorkModeFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData,
+    defaultValues: {
+      workMode: initialData?.workMode || "",
+    },
   });
 
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-        const response=await axios.patch(`/api/jobs/${jobId}`, values);
-        toast.success("Company Updated");
-        toggleEditing();
-        router.refresh();
+      await axios.patch(`/api/jobs/${jobId}`, values);
+      toast.success("Work Mode updated successfully.");
+      toggleEditing();
+      router.refresh();
     } catch (error) {
-        toast.error("Something went wrong")
+      toast.error("Failed to update Work Mode.");
     }
   };
 
   const toggleEditing = () => setIsEditing((current) => !current);
 
+  const selectedOption = options.find((option) => option.value === initialData.workMode);
+
   return (
     <div className="mt-6 border bg-neutral-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Company Name
+        Job Work Mode
         <Button onClick={toggleEditing} variant={"ghost"}>
-          {isEditing ? (
-            <>Cancel</>
-          ) : (
-            <>
-              <Pencil className="w-4 h-4 mr-2" />
-              Edit 
-            </>
-          )}
+          {isEditing ? "Cancel" : <>
+            <Pencil className="w-4 h-4 mr-2" />
+            Edit
+          </>}
         </Button>
-      </div>
+      </div>                 
 
-      {/* Display the title if not editing */}
+      {/* Display the workMode if not editing */}
       {!isEditing && (
-        <p className="text-sm mt-2">{initialData?.title || "No title available"}</p>
+        <p className={cn("text-sm mt-2", !initialData?.workMode && "text-neutral-500 italic")}>
+          {selectedOption?.label || "No Work Mode selected"}
+        </p>
       )}
 
-      {/* On editing mode display the input */}
+      {/* Display the input form when editing */}
       {isEditing && (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
-              name="title"
+              name="workMode"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input disabled={isSubmitting} placeholder="e.g. 'Deloitte'" {...field} />
+                    <ComboBox
+                      heading="Work Mode"
+                      options={options}
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

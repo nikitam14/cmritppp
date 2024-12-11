@@ -6,7 +6,7 @@ export const PATCH = async (req: Request, {params}: {params : {jobId: string}}) 
     try {
         // Await the result of auth() to destructure userId
         const { userId } = await auth();
-        const {jobId}=await params;
+        const {jobId}=params;
 
         const updatedValues = await req.json();
 

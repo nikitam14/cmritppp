@@ -43,4 +43,9 @@ routes -> admin -> create -> page.tsx : Add new jobs by the admin
 installing prisma after that->
 npx prisma init
 
-lec-10 -> How to do changes in schema
+lec-10 ->to do changes in schema
+npx prisma generate
+npx prisma db push
+
+to update the scripts->seeds.ts
+node scripts/seeds.ts
