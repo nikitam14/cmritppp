@@ -12,6 +12,7 @@ import { ShortDescription } from "./_components/short-description";
 import { ShiftTimingForm } from "./_components/shift-timing-mode";
 import { HourlyRateForm } from "./_components/hourly-rate-form";
 import { WorkModeForm } from "./_components/work-mode-form";
+import { JobDescription } from "./_components/job-description";
 
 const JobDetailsPage = async ({ params }: { params: { jobId: string } }) => {
   // Validate the jobId format (MongoDB ObjectId format)
@@ -126,6 +127,19 @@ const JobDetailsPage = async ({ params }: { params: { jobId: string } }) => {
               { label: "Office", value: "office" },
             ]}/>
         </div>
+
+        {/* right container */}
+        <div>
+
+        </div>
+
+        {/* description */}
+
+        <div className="col-span-2">
+            <JobDescription initialData={job} jobId={job.id}/>
+        </div>
+
+
       </div>
     </div>
   );

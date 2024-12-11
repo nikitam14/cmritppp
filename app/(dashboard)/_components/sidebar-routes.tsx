@@ -6,7 +6,7 @@ import { SideBarRouteItem } from "./side-bar-route-item";
 const adminRoutes = [
     {
         icon: List,
-        label: "jobs",
+        label: "Jobs",
         href: "/admin/jobs",
     },
     {
