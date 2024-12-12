@@ -120,5 +120,3 @@ const JobCreatePage = () => {
 
 export default JobCreatePage;
 
-// ___________________________________________________________
-

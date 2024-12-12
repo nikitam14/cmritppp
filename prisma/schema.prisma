@@ -50,24 +50,24 @@ model Category{
 }
 
 model Company{
-id String @id @default (auto()) @map("_id") @db.ObjectId
-userId String
-name String
-description String?
-logo String?
-coverImage String?
-mail String?
-website String?
-LinkedIn String?
-address_line_1 String?
-address_line_2 String?
-city String?
-state String?
-zipcode String?
-jobs Job []
-followers String[]
-overview String?
-whyJoinUs String?
-createdAt DateTime @default(now())
-updatedAt DateTime @default(now())
+  id String @id @default (auto()) @map("_id") @db.ObjectId
+  userId String
+  name String
+  description String?
+  logo String?
+  coverImage String?
+  mail String?
+  website String?
+  LinkedIn String?
+  address_line_1 String?
+  address_line_2 String?
+  city String?
+  state String?
+  zipcode String?
+  jobs Job []
+  followers String[]
+  overview String?
+  whyJoinUs String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 }
