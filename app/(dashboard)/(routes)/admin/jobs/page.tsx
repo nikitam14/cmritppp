@@ -50,7 +50,7 @@ const JobsPageOverview = async () => {
 
       {/* Datatable - List of Jobs */}
       <div className="mt-6">
-        <DataTable columns={columns} data={[]} />
+        <DataTable columns={columns} data={[]} searchKey="title"/>
       </div>
     </div>
   );
