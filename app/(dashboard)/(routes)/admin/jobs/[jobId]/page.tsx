@@ -13,6 +13,7 @@ import { ShiftTimingForm } from "./_components/shift-timing-mode";
 import { HourlyRateForm } from "./_components/hourly-rate-form";
 import { WorkModeForm } from "./_components/work-mode-form";
 import { TagsForm } from "./_components/tags-form";
+import { JobDescription } from "./_components/job-description";
 
 const JobDetailsPage = async ({ params }: { params: { jobId: string } }) => {
   // Await the params if necessary
@@ -144,6 +145,26 @@ const JobDetailsPage = async ({ params }: { params: { jobId: string } }) => {
             </div>
           </div>
         </div>
+
+        {/* right container */}
+        <div className="space-y-6">       <div>
+          <div className="flex items-center gap-x-2">
+            <IconBadge icon={ListChecks}/>
+             <h2 className="text-xl text-neutral-700">Job Requirements</h2>
+         </div>
+
+           <TagsForm initialData={job} jobId={job.id}/>
+          </div>
+
+        </div>
+
+        {/* description */}
+
+        <div className="col-span-2">
+            <JobDescription initialData={job} jobId={job.id}/>
+        </div>
+
+
       </div>
     </div>
   );
