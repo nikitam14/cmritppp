@@ -33,9 +33,6 @@ const JobsPageOverview = async () => {
     company: job.company ? job.company.name: "",
     category: job.category ? job.category?.name : "N/A",
     isPublished: job.isPublished,
-    // createdAt: job.createdAt
-    //   ? format(job.createdAt.toLocaleDateString(), "MMMM do, yyyy")
-    //   : "N/A",
     createdAt: job.createdAt
       ? format(new Date(job.createdAt), "MMMM do, yyyy") // Parse to Date object
       : "N/A",
@@ -54,7 +51,7 @@ const JobsPageOverview = async () => {
 
       {/* Datatable - List of Jobs */}
       <div className="mt-6">
-        <DataTable columns={columns} data={[]} searchKey="title"/>
+        <DataTable columns={columns} data={formatedJobs} searchKey="title"/>
       </div>
     </div>
   );

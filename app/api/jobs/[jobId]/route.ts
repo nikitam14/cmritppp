@@ -34,3 +34,49 @@ export const PATCH = async (req: Request, {params}: {params : {jobId: string}}) 
         return new NextResponse("Internal Server Error", { status: 500 });
     }
 };
+
+
+export const DELETE = async (req: Request, {params}: {params : {jobId: string}}) => {
+    try {
+        // Await the result of auth() to destructure userId
+        const { userId } = await auth();
+        const {jobId}=params;
+
+
+        if (!userId) {
+            return new NextResponse("Un-Authorized", { status: 401 });
+        }
+
+        if (!jobId) {
+            return new NextResponse("ID is missing", { status: 401 });
+        }
+
+        const job=await db.job.findUnique({
+            where:{
+                id: jobId,
+                userId
+            },
+            
+        })
+
+        if (!job) {
+            return new NextResponse("Job Not Found", { status: 404 });
+        }
+
+        const deleteJob = await db.job.delete({
+            where:{
+                id: jobId,
+                userId,
+            },
+
+        });
+
+        return NextResponse.json(deleteJob);
+
+
+       
+    } catch (error) {
+        console.log(`[JOB_DELETE] : ${error}`);
+        return new NextResponse("Internal Server Error", { status: 500 });
+    }
+};
