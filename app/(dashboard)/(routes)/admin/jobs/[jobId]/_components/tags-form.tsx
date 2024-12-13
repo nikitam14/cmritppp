@@ -74,18 +74,20 @@ export const TagsForm = ({ initialData, jobId }: TagsFormProps) => {
   const handlePromptGeneration = async () => {
     try {
       setIsPrompting(true);
-      const customPrompt = `Generate an array of top 10 keywords related to the job profession "${prompt}". These keywords should encompass various aspects of the profession, including skills, responsibilities, tools, and technologies commonly associated with it. Aim for a diverse set of keywords that accurately represent the breadth of the profession. Your output should be a list/array of keywords. Just return me the array alone.`;
+      const customPrompt = `Generate a JSON array of exactly 10 concise and relevant job-related tags for the profession "${prompt}". These tags should strictly focus on the most important skills, technologies, tools, and qualifications commonly associated with this profession. Avoid generic terms, responsibilities, or vague categories. Your output must only include the JSON array.`;
   
       const data = await getGenerativeAIResponse(customPrompt);
   
       // Clean up the response: remove unexpected prefixes
       const cleanedData = data.trim().replace(/^json/i, '').trim();
+      // const cleanedData = data.trim().replace(/^["']?javascript["']?:?/i, '').trim();
   
   
       // Attempt to parse the cleaned response
       try {
         const parsedData = JSON.parse(cleanedData);
         if (Array.isArray(parsedData)) {
+          
           setjobTags((prevTags) => [...prevTags, ...parsedData]);
         } else {
           console.error("Response is not an array:", parsedData);
