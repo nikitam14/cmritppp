@@ -26,12 +26,15 @@ const CompaniesOverviewPage = async () => {
         },
     });
 
-    const formattedCompanies : CompanyColumns [] = companies.map((company: { id: any; name: any; logo: any; createdAt: { toLocaleDateString: () => string | number | Date; }; }) => ({
+    const formattedCompanies : CompanyColumns [] = companies.map((company: { id: any; name: any; createdAt: { toLocaleDateString: () => string | number | Date; }; }) => ({
         id: company.id,
         name : company.name? company.name: "",
-        logo : company. logo ? company. logo: "",
+        // logo : company. logo ? company. logo: "",
+        // createdAt: company.createdAt
+        // ? format(company.createdAt.toLocaleDateString(), "MMMM do, yyyy"): "N/A",
         createdAt: company.createdAt
-        ? format(company.createdAt.toLocaleDateString(), "MMMM do, yyyy"): "N/A",
+        ? format(new Date(company.createdAt), "MMMM do, yyyy") 
+        : "N/A",
     }))
 
 return (
@@ -45,12 +48,10 @@ return (
             </Link>
         </div>
         {/* datatable - List of jobs */}
-        {/* <div className="mt-6">
-            <DataTable columns={columns} data={formattedCompanies} searchKey="name" />
-        </div> */}
         <div className="mt-6">
-            <DataTable columns={columns} data={formattedCompanies} />
+            <DataTable columns={columns} data={formattedCompanies} searchKey="name" />
         </div>
+        
     </div>
 );
 };

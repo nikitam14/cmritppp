@@ -33,8 +33,11 @@ const JobsPageOverview = async () => {
     company: job.company ? job.company.name: "",
     category: job.category ? job.category?.name : "N/A",
     isPublished: job.isPublished,
+    // createdAt: job.createdAt
+    //   ? format(job.createdAt.toLocaleDateString(), "MMMM do, yyyy")
+    //   : "N/A",
     createdAt: job.createdAt
-      ? format(job.createdAt.toLocaleDateString(), "MMMM do, yyyy")
+      ? format(new Date(job.createdAt), "MMMM do, yyyy") // Parse to Date object
       : "N/A",
   }));
 
