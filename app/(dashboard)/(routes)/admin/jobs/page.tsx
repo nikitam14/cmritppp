@@ -26,7 +26,7 @@ const JobsPageOverview = async () => {
     },
   });
 
-  const formatedJobs: JobsColumns[] = jobs.map((job) => ({
+  const formatedJobs: JobsColumns[] = jobs.map((job: { id: any; title: any; category: { name: any; }; isPublished: any; createdAt: string | number | Date; }) => ({
     id: job.id,
     title: job.title,
     company: "",

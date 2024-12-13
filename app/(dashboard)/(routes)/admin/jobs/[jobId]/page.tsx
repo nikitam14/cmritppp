@@ -99,7 +99,7 @@ const JobDetailsPage = async ({ params }: { params: { jobId: string } }) => {
           <CategoryForm
             initialData={job}
             jobId={job.id}
-            options={categories.map((category) => ({
+            options={categories.map((category: { name: any; id: any; }) => ({
               label: category.name,
               value: category.id,
             }))}

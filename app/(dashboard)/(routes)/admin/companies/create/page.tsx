@@ -21,15 +21,15 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 const formSchema = z.object({
-    title: z.string().min(1, { message: "Job Title cannot be empty" }),
+    name: z.string().min(1, { message: "company name cannot be empty" }),
 });
 
-const JobCreatePage = () => {
+const CompanyCreatePage = () => {
     // const [isLoading, setisLoading] = useState(false);
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            title: "",
+            name: "",
         },
     });
 
@@ -38,11 +38,12 @@ const JobCreatePage = () => {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try{
-            const response= await axios.post("/api/jobs", values);
-            router.push(`/admin/jobs/${response.data.id}`);
+            const response= await axios.post("/api/companies", values);
+            router.push(`/admin/companies/${response.data.id}`);
             toast.success("Company Created");
         }catch(error){
             console.log((error as Error) ?.message);
+            toast.error((error as Error) ?.message);
 
             // toast notification
         }
@@ -54,9 +55,9 @@ const JobCreatePage = () => {
             <div className="w-full max-w-lg space-y-6">
                 {/* Section: Name your Job */}
                 <div>
-                    <h1 className="text-2xl font-medium">Name the Company</h1>
+                    <h1 className="text-2xl font-medium">Name your Company</h1>
                     <p className="text-sm text-neutral-500 mt-2 pb-5">
-                       Don&apos;t worry, you can
+                       WHat would you like to name your company? Don't worry, you can
                         change this later.
                     </p>
                 </div>
@@ -70,12 +71,12 @@ const JobCreatePage = () => {
                         {/* Form Field */}
                         <FormField
                         control={form.control}
-                        name="title"
+                        name="name"
                         render={({ field }) => {
                             return (
                     <>
                 
-                        {/* Job Title */}
+                        {/* Job name */}
                         <FormItem className="mt-6"> {/* Added margin top to the entire FormItem */}
                             <FormLabel className="text-base font-medium">
                                 Company Name
@@ -92,7 +93,7 @@ const JobCreatePage = () => {
                         {/* Role Description */}
                         <FormItem className="mt-2">
                             <FormDescription className="text-sm text-neutral-500">
-                                Role of this job
+                                name of this company
                             </FormDescription>
                         </FormItem>
                     </>
@@ -118,5 +119,6 @@ const JobCreatePage = () => {
     );
 };
 
-export default JobCreatePage;
+
+export default CompanyCreatePage;
 
