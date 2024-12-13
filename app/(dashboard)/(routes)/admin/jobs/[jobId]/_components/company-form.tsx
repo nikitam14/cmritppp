@@ -11,28 +11,28 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 import toast from "react-hot-toast";
-// import { Company } from "@prisma/client";
-import { Textarea } from "@/components/ui/textarea";
+import { Job } from "@prisma/client";
 import { cn } from "@/lib/utils";
-import { Company } from "@prisma/client";
+import { ComboBox } from "@/components/ui/combo-box";
 
-interface CompanyDescriptionFormProps {
-  initialData: Company;
-  companyId: string;
+interface CompanyFormProps {
+  initialData: Job
+  jobId: string;
+  options : {label: string, value: string}[]
 }
 
 const formSchema = z.object({
-  description: z.string().min(1, { message: "Description is required" }),
+  companyId: z.string().min(1),
 });
 
-export const CompanyDescriptionForm = ( { initialData, companyId }: CompanyDescriptionFormProps) => {
+export const CompanyForm = ({ initialData, jobId, options }: CompanyFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      description: initialData?.description || ""
+      companyId: initialData?.companyId || ""
     },
   });
 
@@ -40,8 +40,8 @@ export const CompanyDescriptionForm = ( { initialData, companyId }: CompanyDescr
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-        const response=await axios.patch(`/api/companies/${companyId}`, values);
-        toast.success("Company Updated");
+        const response=await axios.patch(`/api/jobs/${jobId}`, values);
+        toast.success("Job Category Updated");
         toggleEditing();
         router.refresh();
     } catch (error) {
@@ -51,27 +51,31 @@ export const CompanyDescriptionForm = ( { initialData, companyId }: CompanyDescr
 
   const toggleEditing = () => setIsEditing((current) => !current);
 
+  const selectedOption =options.find(option=> option.value === initialData.companyId)
+
   return (
     <div className="mt-6 border bg-neutral-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Company Descripiton
+        Job Created By
         <Button onClick={toggleEditing} variant={"ghost"}>
           {isEditing ? (
             <>Cancel</>
           ) : (
             <>
               <Pencil className="w-4 h-4 mr-2" />
-              Edit 
+              Edit
             </>
           )}
         </Button>
       </div>
 
-      {/* Display the name if not editing */}
+      {/* Display the category id if not editing */}
       {!isEditing && (
-        <p className={cn("text-sm mt-2",!initialData.description && "text-neutra-500 italic")}>
-          {initialData?.description || "No description available"}</p>
-      )}
+        <p className={cn("text-sm mt-2", !initialData?.companyId && "text-neutral-500 italic")}>{selectedOption?.label || "No Company"}</p>
+      )}           
+
+      {/* display the category id if not editing
+      {!isEditing && <p className="text-sm mt-2">{initialData.companyId}</p>} */}
 
       {/* On editing mode display the input */}
       {isEditing && (
@@ -79,11 +83,16 @@ export const CompanyDescriptionForm = ( { initialData, companyId }: CompanyDescr
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
-              name="description"
+              name="companyId"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Textarea disabled={isSubmitting} placeholder="e.g. 'Deloitte'" {...field} />
+                    <ComboBox 
+                    heading= "Companies"
+                    options={options}
+                    {...field}
+                    />
+
                   </FormControl>
                   <FormMessage />
                 </FormItem>
