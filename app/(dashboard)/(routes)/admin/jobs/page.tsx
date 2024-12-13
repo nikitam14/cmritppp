@@ -20,20 +20,21 @@ const JobsPageOverview = async () => {
     },
     include: {
       category: true,
+      company:true
     },
     orderBy: {
       createdAt: "desc",
     },
   });
 
-  const formatedJobs: JobsColumns[] = jobs.map((job: { id: any; title: any; category: { name: any; }; isPublished: any; createdAt: string | number | Date; }) => ({
+  const formatedJobs: JobsColumns[] = jobs.map((job) => ({
     id: job.id,
     title: job.title,
-    company: "",
+    company: job.company ? job.company.name: "",
     category: job.category ? job.category?.name : "N/A",
     isPublished: job.isPublished,
     createdAt: job.createdAt
-      ? format(new Date(job.createdAt), "MMMM do, yyyy")
+      ? format(job.createdAt.toLocaleDateString(), "MMMM do, yyyy")
       : "N/A",
   }));
 

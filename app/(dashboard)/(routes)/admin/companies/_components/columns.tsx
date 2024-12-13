@@ -16,15 +16,21 @@ import Link from "next/link";
 export type CompanyColumns = {
   id:string;
   name:string;
-  logo: string;
+  // logo: string;
   createdAt: string;
 };
 
 export const columns: ColumnDef<CompanyColumns>[] = [
-  {
-    accessorKey: "logo",
-    header:"Logo"
-  },
+  // {
+  //   accessorKey: "logo",
+  //   header:"Logo",
+      //  cell:({row})=>{
+      //   const {logo}= row.original
+      //   return (
+      //     <div className="w-20 h-20 flex items-center justify-center relative rounded-md overflow-hidden"></div>
+      //   )
+      //  }
+  // },
   {
     accessorKey: "name",
     header: ({column})=>{

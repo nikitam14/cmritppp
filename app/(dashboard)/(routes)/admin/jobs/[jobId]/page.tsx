@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
-import { ArrowLeft, LayoutDashboard, ListChecks } from "lucide-react";
+import { ArrowLeft, Building2, LayoutDashboard, ListChecks, File } from "lucide-react";
 import Link from "next/link";
 import { JobPublishAction } from "./_components/job-publish-action";
 import { Banner } from "@/components/ui/banner";
@@ -14,6 +14,7 @@ import { HourlyRateForm } from "./_components/hourly-rate-form";
 import { WorkModeForm } from "./_components/work-mode-form";
 import { TagsForm } from "./_components/tags-form";
 import { JobDescription } from "./_components/job-description";
+import { CompanyForm } from "./_components/company-form";
 
 const JobDetailsPage = async ({ params }: { params: { jobId: string } }) => {
   // Await the params if necessary
@@ -44,13 +45,22 @@ const JobDetailsPage = async ({ params }: { params: { jobId: string } }) => {
     orderBy: { name: "asc" },
   });
 
+  const companies = await db.company.findMany({
+    where:{
+      userId
+    },
+    orderBy:{
+      createdAt: "desc"
+    }
+  })
+
   // Redirect if job not found
   if (!job) {
     return redirect("/admin/jobs");
   }
 
   // Determine completion status
-  const requiredFields = [job.title, job.description, job.imageUrl, job.categoryId];
+  const requiredFields = [job.title, job.description, job.categoryId];
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
   const completionText = `(${completedFields}/${totalFields})`;
@@ -136,13 +146,44 @@ const JobDetailsPage = async ({ params }: { params: { jobId: string } }) => {
         </div>
 
         {/* right container */}
-        <div className="space-y-6">       <div>
+        <div className="space-y-6">       
+          <div>
           <div className="flex items-center gap-x-2">
             <IconBadge icon={ListChecks}/>
              <h2 className="text-xl text-neutral-700">Job Requirements</h2>
          </div>
 
-           <TagsForm initialData={job} jobId={job.id}/>
+          <TagsForm initialData={job} jobId={job.id}/>
+
+          </div>
+          
+
+                  {/* company details*/}
+          <div>
+          <div className="flex items-center gap-x-2">
+            <IconBadge icon={Building2}/>
+             <h2 className="text-xl text-neutral-700">Company Details</h2>
+         </div>
+
+          {/* company details*/}
+          <CompanyForm
+          initialData={job}
+          jobId={job.id}
+          options={companies.map((company: { name: any; id: any; }) => ({
+            label: company.name,
+            value: company.id,
+          }))}
+          />
+          </div>
+
+                  {/* attachments */}
+          <div>
+          <div className="flex items-center gap-x-2">
+            <IconBadge icon={File}/>
+             <h2 className="text-xl text-neutral-700">Job Attachments</h2>
+         </div>
+          </div>
+
           </div>
 
         </div>
@@ -155,7 +196,6 @@ const JobDetailsPage = async ({ params }: { params: { jobId: string } }) => {
 
 
       </div>
-    </div>
   );
 };
 
