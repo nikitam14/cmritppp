@@ -16,6 +16,7 @@ export const getJobs= async ({
     title, categoryId, createdAtFilter, shiftTiming, workMode, yearsOfExperience, savedJobs
 }:GetJobs): Promise<Job[]> =>{
 
+    
     const {userId} = await auth()
     try {
         // Initialize the query object with common options
@@ -39,8 +40,12 @@ export const getJobs= async ({
         const jobs = await db.job.findMany(query)
         return jobs;
         
-    } catch (error) {
-        // console.log("[GET_JOBS]:", error);
-        // return [];
+    // } catch (error) {
+    //     console.log("[GET_JOBS]:", error);
+    //     return [];
+    // }
+    }catch (error: any) {
+        console.error("[GET_JOBS]: Error fetching jobs:", error.message || error);
+        return [];
     }
 }
