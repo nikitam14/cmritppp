@@ -4,13 +4,14 @@ import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
 import { CategoriesList } from "./_components/categories-list";
 import { PageContent } from "./_components/page-content";
+import { AppliedFilters } from "./_components/applied-filters";
 
 // Type definition for search parameters
 interface SearchProps {
   searchParams: {
     title?: string;
     categoryId?: string;
-    createdAtFilter?: "asc" | "desc"; // Restrict to valid values
+    createdAtFilter?:string; 
     shiftTiming?: string;
     workMode?: string;
     yearsOfExperience?: string;
@@ -22,8 +23,9 @@ const isValidSortOrder = (value: string | undefined): value is "asc" | "desc" =>
   value === "asc" || value === "desc";
 
 const SearchPage = async ({ searchParams }: { searchParams: SearchProps["searchParams"] }) => {
+
+
   try {
-    // console.log("Search Params:", searchParams);
 
     // Validate and ensure `createdAtFilter` is correct
     const validatedSearchParams = {
@@ -32,6 +34,7 @@ const SearchPage = async ({ searchParams }: { searchParams: SearchProps["searchP
         ? searchParams.createdAtFilter
         : undefined,
     };
+   
 
     // Fetch categories
     const categories = await db.category.findMany({
@@ -39,11 +42,9 @@ const SearchPage = async ({ searchParams }: { searchParams: SearchProps["searchP
         name: "asc",
       },
     });
-    // console.log("Categories:", categories);
 
     // Fetch user authentication
     const { userId } = await auth();
-    // console.log("User ID:", userId);
 
     // Fetch jobs
     const jobs = await getJobs(validatedSearchParams);
@@ -58,6 +59,9 @@ const SearchPage = async ({ searchParams }: { searchParams: SearchProps["searchP
         <div className="p-6">
           {/* Categories */}
           <CategoriesList categories={categories} />
+
+           {/* Applied filters */}
+           <AppliedFilters categories={categories}/>
 
           {/* Page Content */}
           <PageContent jobs={jobs} userId={userId} />
@@ -74,4 +78,12 @@ const SearchPage = async ({ searchParams }: { searchParams: SearchProps["searchP
   }
 };
 
+
+ 
+
+
+
 export default SearchPage;
+
+
+
