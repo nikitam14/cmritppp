@@ -26,16 +26,16 @@ const CompaniesOverviewPage = async () => {
         },
     });
 
-    const formattedCompanies : CompanyColumns [] = companies.map((company: { id: any; name: any; createdAt: { toLocaleDateString: () => string | number | Date; }; }) => ({
+    
+
+    const formattedCompanies: CompanyColumns[] = companies.map((company) => ({
         id: company.id,
         name : company.name? company.name: "",
-        // logo : company. logo ? company. logo: "",
-        // createdAt: company.createdAt
-        // ? format(company.createdAt.toLocaleDateString(), "MMMM do, yyyy"): "N/A",
         createdAt: company.createdAt
-        ? format(new Date(company.createdAt), "MMMM do, yyyy") 
-        : "N/A",
-    }))
+          ? format(new Date(company.createdAt), "MMMM do, yyyy") // Parse to Date object
+          : "N/A",
+      }));
+    
 
 return (
     <div className="p-6">

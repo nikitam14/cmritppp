@@ -21,9 +21,8 @@ interface SearchProps {
 const isValidSortOrder = (value: string | undefined): value is "asc" | "desc" =>
   value === "asc" || value === "desc";
 
-const SearchPage = async ({ searchParams }: { searchParams: SearchProps["searchParams"] }) => {
+const SearchPage = async ({ searchParams={} }: { searchParams: SearchProps["searchParams"] }) => {
   try {
-    console.log("Search Params:", searchParams);
 
     // Validate and ensure `createdAtFilter` is correct
     const validatedSearchParams = {
@@ -39,7 +38,7 @@ const SearchPage = async ({ searchParams }: { searchParams: SearchProps["searchP
         name: "asc",
       },
     });
-    console.log("Categories:", categories);
+    // console.log("Categories:", categories);
 
     // Fetch user authentication
     const { userId } = await auth();

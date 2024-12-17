@@ -38,7 +38,7 @@ export const PageContent = ({ jobs = [], userId }: PageContentProps) => {
         <motion.div
           {...fadeInOut}
           layout
-          className="grid grid-cols-1 md:grid-cols-3 2xl:grid-cols-6 gap-2"
+          className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-2 items-stretch"
         >
           {jobs.map((job) => (
             <JobCardItem key={job.id} job={job} userId={userId} />

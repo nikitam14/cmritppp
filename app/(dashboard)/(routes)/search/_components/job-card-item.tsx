@@ -40,8 +40,8 @@ const JobCardItem = ({ job, userId }: JobCardItemProps) => {
 
   return (
     <motion.div layout>
-      <Card>
-        <div className="w-full h-full p-4 flex flex-col items-start justify-start gap-y-4">
+      <Card className="h-full flex flex-col">
+        <div className="w-full h-full p-4 flex flex-col items-start justify-start gap-y-4 ">
           {/* Saved users */}
           <Box className="w-full">
                                
