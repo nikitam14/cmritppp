@@ -23,7 +23,7 @@ const isValidSortOrder = (value: string | undefined): value is "asc" | "desc" =>
 
 const SearchPage = async ({ searchParams }: { searchParams: SearchProps["searchParams"] }) => {
   try {
-    console.log("Search Params:", searchParams);
+    // console.log("Search Params:", searchParams);
 
     // Validate and ensure `createdAtFilter` is correct
     const validatedSearchParams = {
@@ -39,11 +39,11 @@ const SearchPage = async ({ searchParams }: { searchParams: SearchProps["searchP
         name: "asc",
       },
     });
-    console.log("Categories:", categories);
+    // console.log("Categories:", categories);
 
     // Fetch user authentication
     const { userId } = await auth();
-    console.log("User ID:", userId);
+    // console.log("User ID:", userId);
 
     // Fetch jobs
     const jobs = await getJobs(validatedSearchParams);
