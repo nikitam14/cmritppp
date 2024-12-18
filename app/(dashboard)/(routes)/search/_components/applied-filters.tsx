@@ -30,7 +30,8 @@ export const AppliedFilters =({categories}:AppliedFiltersProps)=>{
     if(searchParams.size===0) return null
 
 
-    return<>
+    return
+    <>
         <div className="mt-4 flex items-center gap-4">
             {shiftTimingParams && Object.entries(shiftTimingParams).map(([key,value])=>(      
                 <>
