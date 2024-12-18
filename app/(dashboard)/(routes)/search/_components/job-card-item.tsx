@@ -145,7 +145,7 @@ const JobCardItem = ({ job, userId }: JobCardItemProps) => {
               </p>
 
               <Link
-                href={`/company/${company?.id}`}
+                href={`/companies/${company?.id}`}
                 className="text-xs text-green-500 w-full truncate"
               >
                 {company?.name}
