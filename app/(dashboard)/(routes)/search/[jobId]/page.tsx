@@ -21,22 +21,22 @@ const JobDetailsPage= async ({params} : {params: {jobId: string}})=>{
         redirect("/search")
     }
 
-    // const profile = await db.userProfile.findUnique({
-    //     where:{
-    //         userId: userId as string
-    //     },
-    //     includes:{
-    //         resumes:{
-    //             orderBy:{
-    //                 createdAt:"desc"
-    //             }
-    //         }
-    //     }
-    // })
+    const profile = await db.userProfile.findUnique({
+        where:{
+            userId: userId as string
+        },
+        // includes:{
+        //     resumes:{
+        //         orderBy:{
+        //             createdAt:"desc"
+        //         }
+        //     }
+        // }
+    })
 
     return (
         <div className="flex-col p-4 md:p-8">
-            <JobDetailsPageContent job={job} jobId={job.id} /*userProfile={profile}*//>
+            <JobDetailsPageContent job={job} jobId={job.id} userProfile={profile}/>
         </div>
     );
 }
