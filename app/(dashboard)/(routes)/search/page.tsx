@@ -42,7 +42,7 @@ const SearchPage = async ({ searchParams={} }: { searchParams: SearchProps["sear
 
     // Fetch user authentication
     const { userId } = await auth();
-    console.log("User ID:", userId);
+    // console.log("User ID:", userId);
 
     // Fetch jobs
     const jobs = await getJobs(validatedSearchParams);
