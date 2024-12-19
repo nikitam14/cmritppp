@@ -12,7 +12,7 @@ interface PageContentProps {
 }
 
 export const PageContent = ({ jobs = [], userId }: PageContentProps) => {
-  console.log("PageContent jobs:", jobs);
+  // console.log("PageContent jobs:", jobs);
 
   if (jobs.length === 0) {
     return (
