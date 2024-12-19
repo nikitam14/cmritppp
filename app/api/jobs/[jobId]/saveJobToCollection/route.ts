@@ -12,7 +12,7 @@ interface Context {
 export const PATCH = async (req: Request, { params }: Context) => {
   try {
     const { userId } = await auth();
-    const { jobId } = params; // Extract jobId from params
+    const { jobId } = await params; // Extract jobId from params
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -25,7 +25,6 @@ export const PATCH = async (req: Request, { params }: Context) => {
     const job = await db.job.findUnique({
       where: {
         id: jobId,
-        userId,
       },
     });
 
@@ -41,7 +40,6 @@ export const PATCH = async (req: Request, { params }: Context) => {
     const updatedJob = await db.job.update({
       where: {
         id: jobId,
-        userId,
       },
       data: updatedData,
     });
