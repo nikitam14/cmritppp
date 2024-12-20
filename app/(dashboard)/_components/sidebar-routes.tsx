@@ -117,6 +117,7 @@ export const SidebarRoutes = () => {
     const routes = isAdminPage ? adminRoutes : guestRoutes;
 
     const handleShiftTimingChange = (shiftTimings: any[])=>{
+        console.log(shiftTimings);
         const currentQueryParams= qs.parseUrl(window.location.href).query;
         const updatedQueryParams ={
             ...currentQueryParams,
