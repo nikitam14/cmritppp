@@ -26,20 +26,31 @@ export const PATCH = async (req: Request, {params}: {params : {companyId: string
             return new NextResponse("Company Not Found", {status: 401});
         }
 
-        // update the data
-        const updatedData={
-            followers: company?.followers?{push:userId} : [userId]
+        // remove userId from the followers
+        const userIndex = company?.followers.indexOf(userId)
+
+        if(userIndex !== -1){
+            const updatedCompany=await db.company.update({
+                where:{
+                    id: companyId,
+                    userId
+                },
+                data:{
+                    followers:{
+                        set: company.followers.filter(followerId=> followerId!==userId)
+                    }
+                }
+
+            })
+
+            return new NextResponse(JSON.stringify(updatedCompany),{status: 200} )
+            
+        }else{
+            return new NextResponse("User not found in the followers",{
+                status: 404,
+            });
         }
 
-        const updatedCompany = await db.company.update({
-            where:{
-                id: companyId,
-                userId,
-            },
-            data: updatedData,
-        })
-
-        return NextResponse.json(updatedCompany);
     } catch (error) {
         console.log(`[COMPANY_PATCH] : ${error}`);
         return new NextResponse("Internal Server Error", { status: 500 });
