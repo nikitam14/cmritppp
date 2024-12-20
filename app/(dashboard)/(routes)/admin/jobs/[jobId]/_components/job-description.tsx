@@ -51,12 +51,13 @@ export const JobDescription = ({ initialData, jobId }: JobDescriptionProps) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const response = await axios.patch(`/api/jobs/${jobId}`, values);
+      await axios.patch(`/api/jobs/${jobId}`, values);
       toast.success("Job Description Updated");
       toggleEditing();
       router.refresh();
     } catch (error) {
       toast.error("Something went wrong");
+      console.error(error);
     }
   };
 
@@ -71,7 +72,7 @@ Additionally, you can list any optional skill related to job. Thanks!`;
 
       await getGenerativeAIResponse(customPrompt).then((data) => {
         data = data.replace(/^'|'$/g, "");
-        let cleanedText = data.replace(/[\*\#]/g, "");
+        const cleanedText = data.replace(/[\*\#]/g, "");
         // form.setValue("description", cleanedText);
         setAiValue(cleanedText);
         setIsPrompting(false);

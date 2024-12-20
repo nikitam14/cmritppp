@@ -39,12 +39,13 @@ export const NameForm = ({ initialData, userId }: NameFormProps) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-        const response=await axios.patch(`/api/users/${userId}`, values);
+        await axios.patch(`/api/users/${userId}`, values);
         toast.success("Profile Updated");
         toggleEditing();
         router.refresh();
     } catch (error) {
         toast.error("Something went wrong")
+        console.log(error);
     }
   };
 

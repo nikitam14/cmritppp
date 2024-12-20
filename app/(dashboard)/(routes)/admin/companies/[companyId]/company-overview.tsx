@@ -31,7 +31,10 @@ const formSchema = z.object({
   overview: z.string().min(1),
 });
 
-export const CompanyOverviewForm = ({ initialData, companyId }: CompanyOverviewFormProps) => {
+export const CompanyOverviewForm = ({
+  initialData,
+  companyId,
+}: CompanyOverviewFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [rolename, setRolename] = useState("");
   const [isPrompting, setIsPrompting] = useState(false);
@@ -50,12 +53,13 @@ export const CompanyOverviewForm = ({ initialData, companyId }: CompanyOverviewF
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const response = await axios.patch(`/api/companies/${companyId}`, values);
+      await axios.patch(`/api/companies/${companyId}`, values);
       toast.success("Company Updated");
       toggleEditing();
       router.refresh();
     } catch (error) {
       toast.error("Something went wrong");
+      console.log(error);
     }
   };
 
@@ -68,7 +72,7 @@ export const CompanyOverviewForm = ({ initialData, companyId }: CompanyOverviewF
 
       await getGenerativeAIResponse(customPrompt).then((data) => {
         data = data.replace(/^'|'$/g, "");
-        let cleanedText = data.replace(/[\*\#]/g, "");
+        const cleanedText = data.replace(/[\*\#]/g, "");
         // form.setValue("description", cleanedText);
         setAiValue(cleanedText);
         setIsPrompting(false);
@@ -109,9 +113,7 @@ export const CompanyOverviewForm = ({ initialData, companyId }: CompanyOverviewF
           )}
         >
           {!initialData.overview && "No overview"}
-          {initialData.overview && (
-            <Preview value={initialData.overview} />
-          )}
+          {initialData.overview && <Preview value={initialData.overview} />}
         </div>
       )}
 
@@ -129,7 +131,7 @@ export const CompanyOverviewForm = ({ initialData, companyId }: CompanyOverviewF
               onChange={(e) => setRolename(e.target.value)}
               className="w-full p-2 rounded-md"
             />
-            
+
             {isPrompting ? (
               <>
                 <Button>

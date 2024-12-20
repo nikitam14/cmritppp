@@ -39,12 +39,13 @@ export const CategoryForm = ({ initialData, jobId, options }: CategoryFormProps)
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-        const response=await axios.patch(`/api/jobs/${jobId}`, values);
+        await axios.patch(`/api/jobs/${jobId}`, values);
         toast.success("Job Category Updated");
         toggleEditing();
         router.refresh();
     } catch (error) {
         toast.error("Something went wrong")
+        console.log(error);
     }
   };
 

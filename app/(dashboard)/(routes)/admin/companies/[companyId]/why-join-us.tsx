@@ -53,12 +53,14 @@ export const WhyJoinUsForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const response = await axios.patch(`/api/companies/${companyId}`, values);
+       await axios.patch(`/api/companies/${companyId}`, values);
       toast.success("Company Updated");
       toggleEditing();
       router.refresh();
     } catch (error) {
       toast.error("Something went wrong");
+      console.log(error);
+
     }
   };
 
@@ -71,7 +73,7 @@ export const WhyJoinUsForm = ({
 
       await getGenerativeAIResponse(customPrompt).then((data) => {
         data = data.replace(/^'|'$/g, "");
-        let cleanedText = data.replace(/[\*\#]/g, "");
+        const cleanedText = data.replace(/[\*\#]/g, "");
         // form.setValue("description", cleanedText);
         setAiValue(cleanedText);
         setIsPrompting(false);
