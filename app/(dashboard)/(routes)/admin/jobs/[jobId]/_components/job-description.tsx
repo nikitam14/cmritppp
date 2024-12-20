@@ -17,8 +17,6 @@ import {
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Job } from "@prisma/client";
-import { ComboBox } from "@/components/ui/combo-box";
-import { Textarea } from "@/components/ui/textarea";
 import getGenerativeAIResponse from "@/scripts/aistudio";
 import Editor from "@/components/ui/editor";
 import { cn } from "@/lib/utils";

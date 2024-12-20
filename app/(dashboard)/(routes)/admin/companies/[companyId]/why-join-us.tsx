@@ -17,8 +17,6 @@ import {
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Company } from "@prisma/client";
-import { ComboBox } from "@/components/ui/combo-box";
-import { Textarea } from "@/components/ui/textarea";
 import getGenerativeAIResponse from "@/scripts/aistudio";
 import Editor from "@/components/ui/editor";
 import { cn } from "@/lib/utils";
@@ -33,7 +31,10 @@ const formSchema = z.object({
   whyJoinUs: z.string().min(1),
 });
 
-export const WhyJoinUsForm = ({ initialData, companyId }: WhyJoinUsFormProps) => {
+export const WhyJoinUsForm = ({
+  initialData,
+  companyId,
+}: WhyJoinUsFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [rolename, setRolename] = useState("");
   const [isPrompting, setIsPrompting] = useState(false);
@@ -111,9 +112,7 @@ export const WhyJoinUsForm = ({ initialData, companyId }: WhyJoinUsFormProps) =>
           )}
         >
           {!initialData.whyJoinUs && "No Details"}
-          {initialData.whyJoinUs && (
-            <Preview value={initialData.whyJoinUs} />
-          )}
+          {initialData.whyJoinUs && <Preview value={initialData.whyJoinUs} />}
         </div>
       )}
 
@@ -131,7 +130,7 @@ export const WhyJoinUsForm = ({ initialData, companyId }: WhyJoinUsFormProps) =>
               onChange={(e) => setRolename(e.target.value)}
               className="w-full p-2 rounded-md"
             />
-            
+
             {isPrompting ? (
               <>
                 <Button>
@@ -147,7 +146,8 @@ export const WhyJoinUsForm = ({ initialData, companyId }: WhyJoinUsFormProps) =>
             )}
           </div>
           <p className="text-xs text-muted-foreground text-right">
-            Note*: Type company name over here to generate the why Join us  content
+            Note*: Type company name over here to generate the why Join us
+            content
           </p>
 
           {aiValue && (

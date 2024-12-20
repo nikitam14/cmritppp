@@ -1,4 +1,3 @@
-import { getJobs } from "@/actions/get-jobs";
 import { CustomBreadCrumb } from "@/components/ui/customBreadCrumb";
 import { Box} from "lucide-react";
 import { db } from "@/lib/db";

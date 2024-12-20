@@ -3,10 +3,9 @@
 import Box from '@/components/ui/box';
 import { Category } from '@prisma/client';
 import React from 'react'
-import CategoryListItem from '../(routes)/search/_components/category-list-item';
 import { Card } from '@/components/ui/card';
 import { iconMapping, IconName } from '@/lib/utils';
-import { ChevronRight, Router } from 'lucide-react';
+import { ChevronRight} from 'lucide-react';
 import qs from "query-string"
 import { useRouter } from 'next/navigation';
 
