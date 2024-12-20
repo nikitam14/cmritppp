@@ -81,6 +81,7 @@ model UserProfile{
   email String?
   contact String?
   targetedCompanies TargetedCompanies[]
+  createdAt DateTime @default(now())
 
 }
 
