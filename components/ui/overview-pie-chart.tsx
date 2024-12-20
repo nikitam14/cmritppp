@@ -2,10 +2,14 @@
 
 import {ResponsiveContainer, Tooltip, PieChart, Cell, Pie} from "recharts"
 
-interface OverviewPieChartProps{
-    data: any[]
-
-}
+interface DataItem {
+    name: string;
+    value: number;
+  }
+  
+  interface OverviewPieChartProps {
+    data: DataItem[];  // Use the defined type here for the data prop
+  }
 
 const BLUE_COLORS = [
     "#0000FF", // Blue
@@ -24,6 +28,7 @@ const BLUE_COLORS = [
   
   export const OverviewPieChart = ({data}: OverviewPieChartProps) => {
     const filterData = data.filter(item => item.value !== 0)
+    console.log(data);
    return (
     <ResponsiveContainer width={"100%"} height={350}>
         <PieChart>
