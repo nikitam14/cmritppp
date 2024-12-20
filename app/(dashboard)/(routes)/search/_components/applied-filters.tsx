@@ -10,8 +10,6 @@ interface AppliedFiltersProps{
 
 export const AppliedFilters =({categories}:AppliedFiltersProps)=>{
 
-    const pathname= usePathname;
-    const router = useRouter;
     const searchParams= useSearchParams();
     
     const currentParams = Object.fromEntries(searchParams.entries());

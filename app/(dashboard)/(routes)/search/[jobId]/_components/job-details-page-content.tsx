@@ -14,8 +14,6 @@ interface JobDetailsPageContentProps {
 }
 export const JobDetailsPageContent = ({
   job,
-  jobId,
-  userProfile,
 }: JobDetailsPageContentProps) => {
   return (
     <>
