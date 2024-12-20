@@ -1,7 +1,15 @@
 "use client"
 
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import {Company, Job } from "@prisma/client";
+import { Loader2, Plus } from "lucide-react";
 import Image from "next/image";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import TabContentSection from "./tab-content-section";
 
 interface CompanyDetailContentPageProps{
     userId: string | null;
@@ -14,6 +22,29 @@ export const CompanyDetailContentPage=({
     company, 
     jobs,
 }: CompanyDetailContentPageProps) =>{
+        const isFollower = userId && company?.followers?.includes(userId)
+        const [isLoading, setIsLoading] = useState(false)
+        const router= useRouter();
+
+        const onClickAddRemoveFollower= async ()=>{
+            try{
+                setIsLoading(true)
+                if(isFollower){
+                    await axios.patch(`/api/companies/${company?.id}/removeFollower`);
+                    toast.success("Un-Followed");
+                }else{
+                    await axios.patch(`/api/companies/${company?.id}/addFollower`);
+                    toast.success("Following");
+                }
+                router.refresh();
+            }catch(error){
+                console.log("Error: ", error);
+                toast.error((error as Error)?.message)
+            }finally{
+                setIsLoading(false)
+            }
+        }
+
         return (
 
             <div className="w-full rounded-2xl bg-white p-4 z-50 -mt-8">
@@ -65,9 +96,25 @@ export const CompanyDetailContentPage=({
                                 </div>
                             </div>
 
+                            <Button onClick={onClickAddRemoveFollower} className={cn("w-24 rounded-full hover:shadow-md flex items-center justify-center border border-green-500", !isFollower && "bg-green-600 hover:bg-green-700")} variant={isFollower ? "outline" : "default"}>
+
+                                {isLoading ? (<Loader2 className="w-3 h-3 animate-spin"/>):(
+                                <React.Fragment>
+                                    {isFollower ? (
+                                        "Unfollow"
+                                    ):(
+                                        <React.Fragment>
+                                            <Plus className=""/>Follow</React.Fragment>
+                                    )}
+                                </React.Fragment>)}
+                            </Button>
+
                         </div>
 
                     </div>
+
+                    {/*tab content */}
+                    <TabContentSection userId={userId} jobs={jobs} company={company}/>
                 </div>
             </div>
         )
