@@ -126,6 +126,11 @@ export const getJobs = async ({
     //   }
     // }
 
+    if(savedJobs){
+      query.where.savedUsers={
+        has : userId,
+      };
+    }
     
 
     // Fetch jobs from the database

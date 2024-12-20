@@ -16,7 +16,7 @@ const CompanyDetailPage= async({
 
     const company = await db.company.findUnique({
         where:{
-            id: params.companyId
+            id: await params.companyId
         },
     });
 
