@@ -1,7 +1,11 @@
 "use client"
 
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import {Company, Job } from "@prisma/client";
+import { Loader2, Plus } from "lucide-react";
 import Image from "next/image";
+import React, { useState } from "react";
 
 interface CompanyDetailContentPageProps{
     userId: string | null;
@@ -14,6 +18,9 @@ export const CompanyDetailContentPage=({
     company, 
     jobs,
 }: CompanyDetailContentPageProps) =>{
+        const isFollower = userId && company?.followers?.includes(userId)
+        const [isLoading, setIsLoading] = useState(false)
+        const onClickAddRemoveFollower= async ()=>{};
         return (
 
             <div className="w-full rounded-2xl bg-white p-4 z-50 -mt-8">
@@ -64,6 +71,20 @@ export const CompanyDetailContentPage=({
 
                                 </div>
                             </div>
+
+                            <Button onClick={onClickAddRemoveFollower} className={cn("w-24 rounded-full hover:shadow-md flex items-center justify-center border border-blue-500", !isFollower && "bg-blue-600 hover:bg-blue-700")} variant={isFollower ? "outline" : "default"}>
+
+                                {isLoading ? (<Loader2 className="w-3 h-3 animate-spin"/>):(
+                                <React.Fragment>
+                                    {isFollower ? (
+                                        "Unfollow"
+                                    ):(
+                                        <React.Fragment>
+                                            <Plus className="w-4 h-4 mr-2"/>Follow
+                                        </React.Fragment>
+                                    )}
+                                </React.Fragment>)}
+                            </Button>
 
                         </div>
 
