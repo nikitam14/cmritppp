@@ -25,7 +25,7 @@ cursor-pointer" onClick={()=>router.push(`/companies/${company.id}`)}>
 export const HomeCompaniesList = ({companies}:HomeCompaniesListProps) => {
     return(
         <Box className="flex-col my-12">
-            <h2 className="text-2xl tracking-wider font-bold font-sans">Featured companies actively hiring</h2> 
+            <h2 className="text-2xl tracking-wider font-bold font-sans">Top Recruiters Hiring from Our Campus</h2> 
             <div className="mt-12 flex w-full items-center justify-center flex-wrap gap-4">
                 {
                     companies.map(item => (

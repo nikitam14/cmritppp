@@ -21,12 +21,9 @@ export const Footer = () => {
     <Box className="h-72 p-4 items-start flex-col">
       <div className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6">
         {/* first section */}
-        <Box className="flex-col items-start gap-6">
-          <div className="flex items-center gap-3">
+        <Box className="flex-col items-center justify-center gap-6">
+          <div className="flex items-center">
             <Logo />
-            <h2 className="text-xl font-semibold text-muted-foreground">
-              WorkNow
-            </h2>
           </div>
           <p className="font-semibold text-base">Connect with us</p>
           <div className="flex items-center gap-6 w-full">

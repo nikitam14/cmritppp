@@ -16,7 +16,7 @@ export const RecommendedJobsList = ({jobs,userId} : RecommendedJobsListProps) =>
     <Box className='flex-col justify-center gap-y-4 my-6 mt-12'>
 
       <h2 className='text-2xl font-semibold tracking-wider font-sans'>
-        Recommended Jobs
+        Top Job Matches for You
       </h2>
 
       <div className='mt-4'>

@@ -29,10 +29,10 @@ const DashboardHomePage = async () => {
             {/* Header Section */}
             <Box className="flex-col justify-center w-full space-y-4 mt-12">
                 <h2 className="text-2xl md:text-4xl font-sans font-bold tracking-wide text-neutral-600">
-                    Find Your Dream Job
+                        Everything You Need for Placement in One Place.
                 </h2>
                 <p className="text-2xl text-muted-foreground">
-                    {jobs.length} + Jobs For you to explore
+                    {jobs.length} + Companies for you to Explore
                 </p>
             </Box>
 
