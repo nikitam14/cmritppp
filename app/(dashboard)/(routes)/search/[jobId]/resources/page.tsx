@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { JobResourcesContent } from "./_components/job_resources";
 
 const JobResourcePage = async ({ params }: { params: { jobId: string } }) => {
-  const { userId } = await auth();
+  // const { userId } = await auth();
 
   const job = await db.job.findUnique({
     where: {
@@ -19,19 +19,11 @@ const JobResourcePage = async ({ params }: { params: { jobId: string } }) => {
     redirect("/search");
   }
 
-
-
-
-
-
-
   return (
     <div className="flex-col p-4 md:p-8">
-      <JobResourcesContent job={job} jobId={job.id}  />
+      <JobResourcesContent job={job} jobId={job.id} />
     </div>
   );
-
-  
 };
 
 export default JobResourcePage;

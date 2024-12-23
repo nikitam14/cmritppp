@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { CustomBreadCrumb } from "@/components/ui/customBreadCrumb";
 import Preview from "@/components/ui/preview";
 import { Company, Job } from "@prisma/client";
-import { UserProfile } from "@prisma/client";
+// import { UserProfile } from "@prisma/client";
 import Link from "next/link";
 
 interface JobDetailsPageContentProps {
