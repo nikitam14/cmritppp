@@ -44,8 +44,8 @@ export const ContactForm = ({ initialData, userId }: ContactFormProps) => {
         toggleEditing();
         router.refresh();
     } catch (error) {
-        // toast.error("Something went wrong");
-        // console.log(error);
+        toast.error("Something went wrong");
+        console.log(error);
     }
   };
 
