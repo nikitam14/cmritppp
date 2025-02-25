@@ -100,7 +100,10 @@ export const getJobs = async ({
     }
 
     // filter the data based on the shift timing
-    let formattedShiftTiming = shiftTiming?.split(',')
+    console.log("ShiftTiming:",shiftTiming);
+    let formattedShiftTiming = Array.isArray(shiftTiming) ? shiftTiming : shiftTiming?.split(',');
+
+    console.log("formattedShiftTiming: ", formattedShiftTiming)
 
     if(formattedShiftTiming && formattedShiftTiming.length>0){
       query.where.shiftTiming={

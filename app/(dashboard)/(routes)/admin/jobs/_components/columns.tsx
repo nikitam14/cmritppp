@@ -22,6 +22,8 @@ export type JobsColumns = {
   isPublished: boolean;
 };
 
+
+
 export const columns: ColumnDef<JobsColumns>[] = [
   {
     accessorKey: "title",
@@ -121,16 +123,13 @@ export const columns: ColumnDef<JobsColumns>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <Link href={`/admin/jobs/${id}`}>
-              <DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
                 <Pencil className="w-4 h-4 mr-2" />
                 Edit
               </DropdownMenuItem>
             </Link>
             <Link href={`/admin/jobs/${id}`}>
-              <DropdownMenuItem>
-                <Pencil className="w-4 h-4 mr-2" />
-                Applicants
-              </DropdownMenuItem>
+            
             </Link>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -68,9 +68,9 @@ export const getPieGraphJobCreatedByUser = async (
     return [ ] ;
     }
     const jobs = await db.job.findMany ({
-    where: {
-    userId,
-    },
+    // where: {
+    // userId,
+    // },
     orderBy: {
     createdAt: "desc",
     },
@@ -129,9 +129,9 @@ export const getPieGraphCompanyCreatedByUser = async (
     return [ ] ;
     }
     const companies = await db.company.findMany ({
-    where: {
-    userId,
-    },
+    // where: {
+    // userId,
+    // },
     orderBy: {
     createdAt: "desc",
     },

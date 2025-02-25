@@ -26,29 +26,39 @@ export const AppliedFilters =({categories}:AppliedFiltersProps)=>{
     }
 
     if(searchParams.size===0) return null
-
+    console.log("shiftTimingParams: ",shiftTimingParams);
 
     return(
     <>
         <div className="mt-4 flex items-center gap-4">
             {shiftTimingParams && Object.entries(shiftTimingParams).map(([key,value])=>(      
-                <>
-                    {value.split(",").map(item=>(
-                        <Button variant={"outline"} type="button" key={`${item}-${key}`} className="flex items-center gap-x-2 text-neutral-500 px-2 py-1 rounded md bg-blue-50/80 border-blue-100 capitalized cursor-pointer hover:bg-blue-50">
-                            {item}
-                        </Button>
-                    ))}
-                </>
+                <div key={key} className="flex items-center gap-4"> 
+                {value.split(",").map((item, index) => (
+                  <Button
+                    variant="outline"
+                    type="button"
+                    key={`${key}-${item}-${index}`} // Ensures uniqueness
+                    className="flex items-center gap-x-2 text-neutral-500 px-2 py-1 rounded-md bg-blue-50/80 border-blue-100 capitalize cursor-pointer hover:bg-blue-50"
+                  >
+                    {item}
+                  </Button>
+                ))}
+              </div>
             ))}
 
             {workingModesParams && Object.entries(workingModesParams).map(([key,value])=>(      
-                    <>
-                    {value.split(",").map(item=>(
-                        <Button variant={"outline"} type="button" key={`${item}-${key}`} className="flex items-center gap-x-2 text-neutral-500 px-2 py-1 rounded md bg-blue-50/80 border-blue-100 capitalized cursor-pointer hover:bg-blue-50">
-                            {item}
-                        </Button>
+                    <div key={key} className="flex items-center gap-4">
+                    {value.split(",").map((item, index) => (
+                      <Button
+                        variant="outline"
+                        type="button"
+                        key={`${key}-${item}-${index}`} // Ensures unique keys
+                        className="flex items-center gap-x-2 text-neutral-500 px-2 py-1 rounded-md bg-blue-50/80 border-blue-100 capitalize cursor-pointer hover:bg-blue-50"
+                      >
+                        {item}
+                      </Button>
                     ))}
-                </>
+                  </div>
             ))}
 
             {searchParams.get("categoryId") && 

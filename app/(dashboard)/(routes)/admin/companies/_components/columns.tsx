@@ -1,5 +1,6 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,9 +8,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { ArrowUpDown, MoreHorizontal, Pencil} from "lucide-react";
+import { ArrowUpDown, MoreHorizontal, Pencil, Trash} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
+
+
+
 
 export type CompanyColumns = {
   id:string;
@@ -59,6 +67,7 @@ export const columns: ColumnDef<CompanyColumns>[] = [
     id: "actions",
     cell: ({ row }) => {
       const { id } = row.original;
+    
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -68,17 +77,12 @@ export const columns: ColumnDef<CompanyColumns>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <Link href={`/admin/companies/${id}`}>
-              <DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
                 <Pencil className="w-4 h-4 mr-2" />
                 Edit
               </DropdownMenuItem>
             </Link>
-            <Link href={`/admin/companies/${id}/applicants`}>
-              <DropdownMenuItem>
-                <Pencil className="w-4 h-4 mr-2" />
-                Applicants
-              </DropdownMenuItem>
-            </Link>
+        
           </DropdownMenuContent>
         </DropdownMenu>
       );

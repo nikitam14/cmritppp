@@ -39,7 +39,7 @@ export const CompanyDetailContentPage=({
                 router.refresh();
             }catch(error){
                 console.log("Error: ", error);
-                toast.error((error as Error)?.message)
+                // toast.error((error as Error)?.message)
             }finally{
                 setIsLoading(false)
             }

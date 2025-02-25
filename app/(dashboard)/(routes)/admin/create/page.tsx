@@ -52,7 +52,7 @@ const JobCreatePage = () => {
       <div className="w-full max-w-lg space-y-6">
         {/* Section: Name your Job */}
         <div>
-          <h1 className="text-2xl font-medium">Name the Company</h1>
+          <h1 className="text-2xl font-medium">Job Title</h1>
           <p className="text-sm text-neutral-500 mt-2 pb-5">
             Don&apos;t worry, you can change this later.
           </p>
@@ -73,7 +73,7 @@ const JobCreatePage = () => {
                       {" "}
                       {/* Added margin top to the entire FormItem */}
                       <FormLabel className="text-base font-medium">
-                        Company Name
+                        Job Title
                       </FormLabel>
                       <FormControl>
                         <Input

@@ -31,6 +31,10 @@ const DashboardAnalyticsPage = async () => {
   );
 const graphsJobPortal = await getPieGraphJobCreatedByUser(userId);
 const graphsCompanyPortal = await getPieGraphCompanyCreatedByUser(userId);
+const filteredGraphsJobPortal = graphsJobPortal.filter((item) => item.value > 0);
+const filteredGraphsCompanyPortal = graphsCompanyPortal.filter((item) => item.value > 0);
+console.log(filteredGraphsJobPortal);
+console.log(filteredGraphsCompanyPortal);
 
 
   return (
@@ -94,7 +98,7 @@ const graphsCompanyPortal = await getPieGraphCompanyCreatedByUser(userId);
             <BriefcaseBusiness className="w-4 h-4 " />
           </CardHeader>
           <CardContent className="text-2xl font-bold">
-            <OverviewPieChart data={graphsJobPortal}/>
+            <OverviewPieChart data={filteredGraphsJobPortal}/>
           </CardContent>
          
         </Card>
@@ -106,7 +110,7 @@ const graphsCompanyPortal = await getPieGraphCompanyCreatedByUser(userId);
             <BriefcaseBusiness className="w-4 h-4 " />
           </CardHeader>
           <CardContent className="text-2xl font-bold">
-            <OverviewPieChart data={graphsCompanyPortal}/>
+            <OverviewPieChart data={filteredGraphsCompanyPortal}/>
           </CardContent>
          
         </Card>

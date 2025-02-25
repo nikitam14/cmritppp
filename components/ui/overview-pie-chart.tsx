@@ -13,7 +13,7 @@ interface DataItem {
 
 const BLUE_COLORS = [
     "#0000FF", // Blue
-    "#0000CD", // Medium Blue
+    "#45479f", // Medium Blue
     "#1E90FF", // Dodger Blue
     "#4169E1", // Royal Blue
     "#4682B4", // Steel Blue
@@ -22,7 +22,7 @@ const BLUE_COLORS = [
     "#7B68EE", // Medium Slate Blue
     "#87CEEB", // Sky Blue
     "#4682B4", // Steel Blue
-    "#00008B", // Dark Blue
+    "#0e0e47", // Dark Blue
   ];
 
   
@@ -39,7 +39,7 @@ const BLUE_COLORS = [
                 cx={"50%"}
                 cy={"50%"}
                 innerRadius={60}
-                outerRadius={8}
+                outerRadius={100}
                 fill="82ca9d"
                 label={({name,value})=> `${name}: ${value}`}
             >
